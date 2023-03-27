@@ -8,6 +8,10 @@ const connectDb = require('./dbConnection/connectDb');
 // configure env
 dotenv.config();
 
+//router import
+const userRoutes = require('./routes/userRoutes');
+const blogRoutes = require('./routes/blogRoutes');
+
 //mongodb connection
 connectDb();
 
@@ -20,10 +24,12 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // routes
+// app.get('/', (req, res)=> {
+//     res.status(400).send({'message':'hello'})  (note: this was only for conection message test)
+// })
 
-app.get('/', (req, res)=> {
-    res.status(400).send({'message':'hello'})
-})
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/blog', blogRoutes);
 
 //Port
 const PORT = process.env.PORT
