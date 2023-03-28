@@ -71,7 +71,6 @@ exports.createBlogController = async (req, res) => {
             message: 'Error while creating blog',
             error,
         })
-
     }
 
 }
