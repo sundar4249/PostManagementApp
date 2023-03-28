@@ -130,7 +130,9 @@ exports.getBlogByIdController = async (req, res) => {
 exports.deleteBlogIdcontroller = async (req, res) => {
     try {
         const { id } = req.params;
-        await blogModel.findByIdAndDelete(id)
+        const blog = await blogModel.findByIdAndDelete(id).populate('user');
+        await blog.user.blogs.pull(blog);
+        await blog.user.save();
         return res.status(200).send({
             success: true,
             message: 'Blog deleted',
@@ -143,5 +145,30 @@ exports.deleteBlogIdcontroller = async (req, res) => {
             error
         })
     }
-
+}
+// Get user blog
+exports.userBlogController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userBlog = await userModel.findById(id).populate('blogs') //use of populate mathod to display bogs
+        //check if not user
+        if (!userBlog) {
+            return res.status(404).send({
+                success: false,
+                message: 'Blog not found with this ID'
+            })
+        }
+        return res.status(200).send({
+            success: true,
+            message: 'user blog list',
+            userBlog,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success: false,
+            message: 'error to get user blog',
+            error
+        })
+    }
 }

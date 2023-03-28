@@ -3,7 +3,8 @@ const { getgetAllBlogsController,
     createBlogController,
     updateBlogController,
     getBlogByIdController,
-    deleteBlogIdcontroller } = require('../contollers/blogController');
+    deleteBlogIdcontroller,
+    userBlogController } = require('../contollers/blogController');
 
 //router object
 const router = express.Router()
@@ -25,4 +26,6 @@ router.get('/get-blog/:id', getBlogByIdController);
 //Delete || delete blog
 router.delete('/delete-blog/:id', deleteBlogIdcontroller);
 
+//Get || user blog
+router.get('/user-blog/:id', userBlogController);
 module.exports = router;
