@@ -35,8 +35,9 @@ const Header = () => {
                     </Typography>
                     {isLogin && (<Box display={'flex'} marginLeft='auto' marginRight='auto' >
                         <Tabs textColor='inherit' value={value} onChange={(e, val) => setValue(val)}>
-                            <Tab label='Posts' LinkComponent={Link} to='/posts' />
+                            <Tab label='All Posts' LinkComponent={Link} to='/posts' />
                             <Tab label='My posts' LinkComponent={Link} to='/my-posts' />
+                            <Tab label='Create Posts' LinkComponent={Link} to='/create-posts' />
                         </Tabs>
                     </Box>
                     )}
