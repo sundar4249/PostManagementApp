@@ -24,11 +24,13 @@ const Blogs = () => {
     return (
         <div>
             {blogs && blogs.map((blog) => <PostCard
-                title={blog.title}
-                description={blog.description}
-                image={blog.image}
+                id={blog?._id}
+                isUSer={localStorage.getItem('userI') === blog?.user?._id} //condition added to delete specific user post
+                title={blog?.title}
+                description={blog?.description}
+                image={blog?.image}
                 username={blog?.user?.username}
-                time={blog.createdAt} />)}
+                time={blog?.createdAt} />)}
 
 
         </div>

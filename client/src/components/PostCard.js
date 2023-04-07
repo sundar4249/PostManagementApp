@@ -6,9 +6,33 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
-export default function PostCard({ title, description, image, username, time }) {
+export default function PostCard({ title, description, image, username, time, id, isUser }) {
+    const nagivate = useNavigate();
+    const handleEdit = () => {
+        nagivate(`/bolg-details/${id}`)
+
+    }
+    const handleDelete = async () => {
+        try {
+            const { data } = await axios.delete(`http://localhost:8800/api/v1/blog/delete-blog/${id}`)
+            if (data?.success) {
+                alert('Post deleted')
+                // nagivate('/my-posts')
+                window.location.reload();
+            }
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Card sx={{
@@ -16,6 +40,19 @@ export default function PostCard({ title, description, image, username, time }) 
                 boxShadow: '10px 10px 20px #ccc'
             }
         }}>
+
+            {isUser && (
+                <Box display={'flex'}>
+                    <IconButton onClick={handleEdit} sx={{ marginLeft: 'auto' }}>
+                        <EditIcon color='info' />
+                    </IconButton>
+                    <IconButton onClick={handleDelete}>
+                        <DeleteIcon color='error' />
+                    </IconButton>
+
+                </Box>
+
+            )}
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

@@ -25,6 +25,8 @@ const UserBlogs = () => {
     return (
         <div>
             {blogs && blogs.length > 0 ? (blogs.map((blog) => (<PostCard
+                id={blog._id}  // for delete functionality
+                isUser={true}  // condition added to delete specific user post
                 title={blog.title}
                 description={blog.description}
                 image={blog.image}
